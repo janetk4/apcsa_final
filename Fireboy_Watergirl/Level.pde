@@ -1,11 +1,11 @@
 class Level{
   
-  ArrayList<Platform> platform;
-  ArrayList<Hazard> hazards;
-  ArrayList<Button> buttons;
-  ArrayList<Door> doors;
+  //ArrayList<Platform> platform;
+  //ArrayList<Hazard> hazards;
+  //ArrayList<Button> buttons;
+  //ArrayList<Door> doors;
   
-  loadLevel(int levelNumber){
+  void loadLevel(int levelNumber){
     if (levelNumber == 1){
       //i think i can set up the map in here
     }

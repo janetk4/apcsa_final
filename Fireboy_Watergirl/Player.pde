@@ -1,14 +1,22 @@
 class Player{
   
-  float x;
-  float y;
-  float vx;
-  float vy;
+  //float x;
+  //float y;
+  //float vx=40;
+  //float vy=10;
+  
+    PVector location;
+  PVector velocity;
   String type;
   boolean onGround;
   
   Player(String element){
     type = element;
+    x = 0;
+    y = 660;
+    if (type.equals("water")){
+      x = 40;
+    }
   }
   
   void moveLeft(){
@@ -20,17 +28,21 @@ class Player{
   }
   
   void jump(){
-    y += vy;
     y -= vy;
+//    y -= vy;
   }
   
-  checkCollision(Platform p){
+  void applyForce(float force){
     
   }
   
-  checkHazard(Hazard h){
+  //boolean checkCollision(Platform p){
     
-  }
+  //}
+  
+  //boolean checkHazard(Hazard h){
+    
+  //}
   
   void update(){
     //check collision hazard here or maybe in draw in game file
@@ -38,10 +50,14 @@ class Player{
   
   void display() {
     if (type.equals("fire")){
-      
+      stroke(255);
+      strokeWeight(2);
+      fill(204, 48, 68);
+      square(x, y, 40);
     }
-    else{
-      
+    if (type.equals("water")){
+      fill(144, 204, 240);
+      square(x, y, 40);
     }
   }
   
