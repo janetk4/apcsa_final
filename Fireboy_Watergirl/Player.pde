@@ -1,17 +1,18 @@
 class Player{
   
-  //float x;
-  //float y;
-  //float vx=40;
-  //float vy=10;
+  float x;
+  float y;
+  float vx=5;
+  float vy=40;
   
-    PVector location;
-  PVector velocity;
+  //PVector location;
+  //PVector velocity;
   String type;
   boolean onGround;
   
   Player(String element){
     type = element;
+    onGround = true;
     x = 0;
     y = 660;
     if (type.equals("water")){
@@ -28,17 +29,23 @@ class Player{
   }
   
   void jump(){
+    onGround = false;
     y -= vy;
-//    y -= vy;
   }
   
-  void applyForce(float force){
-    
+  void applyG(){
+    y += vy;
   }
   
-  //boolean checkCollision(Platform p){
+  boolean checkCollision(Platform p){
+    PVector player;
+    player.x = x;
+    player.y = y;
+    PVector platform;
+    platform.x = p.getX();
+    platform.y = p.getY();
     
-  //}
+  }
   
   //boolean checkHazard(Hazard h){
     

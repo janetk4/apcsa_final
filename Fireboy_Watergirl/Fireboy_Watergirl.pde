@@ -24,7 +24,7 @@ void keyPressed(){
   }
   //water
   if (key == 'W'){
-    watergirl.jump();
+    //watergirl.jump();
   }
   if (key == 'A'){
     watergirl.moveLeft();
@@ -36,7 +36,9 @@ void keyPressed(){
 
 void draw(){
   //gravity
-  for 
+  if (fireboy.onGround == false){
+    fireboy.applyG();   //i need a method to 
+  }
   background(186, 186, 186);
   fireboy.display();
   watergirl.display();
