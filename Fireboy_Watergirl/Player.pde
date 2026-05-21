@@ -37,13 +37,18 @@ class Player{
     y += vy;
   }
   
-  boolean checkCollision(Platform p){
-    PVector player;
-    player.x = x;
-    player.y = y;
-    PVector platform;
-    platform.x = p.getX();
-    platform.y = p.getY();
+  void checkCollision(Platform p){
+    float px = p.getX();
+    float py = p.getY();
+    float pEx = p.getEX();
+    float pEy = p.getEY();
+    
+    float closeX = constrain(x, px, pEx);
+    float closeY = constrain(y, py, pEy);
+    
+    float dx = x - closeX;
+    float dy = y - closeY;
+    
     
   }
   

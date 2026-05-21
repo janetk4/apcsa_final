@@ -23,13 +23,13 @@ void keyPressed(){
     fireboy.moveRight();
   }
   //water
-  if (key == 'W'){
+  if (keyCode == 'W'){
     //watergirl.jump();
   }
-  if (key == 'A'){
+  if (keyCode == 'A'){
     watergirl.moveLeft();
   }
-  if (key == 'D'){
+  if (keyCode == 'D'){
     watergirl.moveRight();
   }
 }
