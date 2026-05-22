@@ -31,10 +31,10 @@ class Platform{
   }
   
   void display(){
-    stroke(color(0));
-    strokeWeight(0.5);
+    stroke(color(90));
+    strokeWeight(1);
     fill(col);
-    rect(locationSt.x, locationSt.y, locationEnd.x, locationEnd.y);
+    rect(locationSt.x, locationSt.y, locationEnd.x-locationSt.x, locationEnd.y-locationSt.y);
   }
   
 }

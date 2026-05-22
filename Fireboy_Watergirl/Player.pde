@@ -14,7 +14,7 @@ class Player{
     type = element;
     onGround = true;
     x = 0;
-    y = 660;
+    y = 640;
     if (type.equals("water")){
       x = 40;
     }
@@ -49,7 +49,6 @@ class Player{
     float dx = x - closeX;
     float dy = y - closeY;
     
-    
   }
   
   //boolean checkHazard(Hazard h){
@@ -62,15 +61,18 @@ class Player{
   
   void display() {
     if (type.equals("fire")){
-      stroke(255);
+      stroke(color(199, 87, 87));
       strokeWeight(2);
-      fill(204, 48, 68);
+      fill(242, 111, 111);
       square(x, y, 40);
     }
     if (type.equals("water")){
-      fill(144, 204, 240);
+      stroke(color(82, 152, 205));
+      fill(136, 196, 241);
       square(x, y, 40);
     }
   }
+  
+  //arraylist with the keys, 
   
 }

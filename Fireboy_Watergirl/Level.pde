@@ -1,6 +1,6 @@
 class Level{
   
-  //ArrayList<Platform> platform;
+  ArrayList<Platform> platform;
   //ArrayList<Hazard> hazards;
   //ArrayList<Button> buttons;
   //ArrayList<Door> doors;
@@ -8,6 +8,7 @@ class Level{
   void loadLevel(int levelNumber){
     if (levelNumber == 1){
       //i think i can set up the map in here
+      platform.add(new Platform(0, 680, 1000, 700, "stone"));
     }
     if (levelNumber == 2){
       
