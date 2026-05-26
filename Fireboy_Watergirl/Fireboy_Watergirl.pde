@@ -5,6 +5,7 @@ ArrayList<Platform> platforms;
 float levelNow;
 int worldW = 1000;
 int worldH = 700;
+String m;
 
 void setup(){
   size(1000, 700);
@@ -15,19 +16,31 @@ void setup(){
   fireboy = players.get(0);
   watergirl = players.get(1);
   
-  levelNow = 1;   //ill do something with this to increase levels later
+  levelNow = 2;   //ill do something with this to increase levels later
 }
 
 void update(){
   //check if level has been beaten
   
   //and load levels i guess
-  platforms.add(new Platform(-5, 0, 5, worldH, "stone"));      //these two makes sides of screen a platform
-  platforms.add(new Platform(worldW, 0, 5, worldH, "stone"));  //so that collision applies
+  platforms.add(new Platform(-5, 0, 5, worldH, "stone"));      //these two makes sides of screen a
+  platforms.add(new Platform(worldW, 0, 5, worldH, "stone"));  //platform so that collision applies
   if (levelNow == 1){
-    platforms.add(new Platform(0, 680, 1000, 40, "stone"));
-    platforms.add(new Platform(0, 580, 800, 20, "stone"));
+    m = "stone";
+    platforms.add(new Platform(0, 530, 800, 20, m));
+    platforms.add(new Platform(150, 380, 850, 20, m));
+    platforms.add(new Platform(0, 230, 800, 20, m));
+    platforms.add(new Platform(250, 100, 750, 20, m));
   }
+  if (levelNow == 2){
+    m = "bub";
+    platforms.add(new Platform(250, 580, 220, 20, m));
+    platforms.add(new Platform(550, 580, 220, 20, m));
+    platforms.add(new Platform(0, 470, 800, 20, m));
+    platforms.add(new Platform(150, 400, 850, 20, m));
+  }
+  
+  platforms.add(new Platform(0, 680, 1000, 40, m));
 }
 
 void keyPressed(){
@@ -69,7 +82,12 @@ void draw(){
   //if (fireboy.onGround == false){
   //  fireboy.applyG();   //i need a method to 
   //}
-  background(186, 186, 186);
+  if (levelNow == 1){
+    background(186, 186, 186);
+  }
+  if (levelNow == 2){
+    background(243, 216, 237);
+  }
   for (Player p : players){
     p.move();    //updates moving
     p.applyG();  //updates gravity

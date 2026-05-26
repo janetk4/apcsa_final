@@ -4,7 +4,6 @@ class Platform{
   float w;
   float h;
   color col;
-  float r;
   
   Platform(float x, float y, float wi, float he, String mat){
     location = new PVector(x, y);
@@ -13,7 +12,9 @@ class Platform{
     if (mat.equals("stone")){
       col = color(149);  //fill in with gray
     }
-    r = 10;
+    if (mat.equals("bub")){
+      col = color(229, 159, 214);
+    }
   }
   
   float getX(){
