@@ -1,13 +1,15 @@
 class Platform{
   
-  PVector locationSt;
-  PVector locationEnd;
+  PVector location;
+  float w;
+  float h;
   color col;
   float r;
   
-  Platform(float x, float y, float x2, float y2, String mat){
-    locationSt = new PVector(x, y);
-    locationEnd = new PVector(x2, y2);
+  Platform(float x, float y, float wi, float he, String mat){
+    location = new PVector(x, y);
+    w = wi;
+    h = he;
     if (mat.equals("stone")){
       col = color(149);  //fill in with gray
     }
@@ -15,26 +17,26 @@ class Platform{
   }
   
   float getX(){
-    return locationSt.x;
+    return location.x;
   }
   
   float getY(){
-    return locationSt.y;
+    return location.y;
   }
   
-  float getEX(){
-    return locationEnd.x;
+  float getW(){
+    return w;
   }
   
-  float getEY(){
-    return locationEnd.y;
+  float getH(){
+    return h;
   }
   
   void display(){
     stroke(color(90));
     strokeWeight(1);
     fill(col);
-    rect(locationSt.x, locationSt.y, locationEnd.x-locationSt.x, locationEnd.y-locationSt.y);
+    rect(location.x, location.y, w, h);
   }
   
 }
