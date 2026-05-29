@@ -6,6 +6,7 @@ class Player{
   float vy;
   float w = 40;    //size of player for now
   float h = 40;
+  boolean alive;
   
   //PVector location;
   //PVector velocity;
@@ -74,15 +75,32 @@ class Player{
     }
   }
   
-  //boolean checkHazard(Hazard h){
+  void checkHazard(Hazard hzd){
+    float hx = hzd.getX();
+    float hy = hzd.getY();
+    float hw = hzd.getW();
+    float hh = hzd.getH();
     
-  //}
+    if (x< hx+hw && x+w > hx && y < hy+hh && y+h > hy){
+      float olTop = y+h - hy;
+      float olBot = hy+hh - y;
+      float olLeft = x+w - hx;
+      float olRight = hx+hw - x;
+      
+      float minOL = min(min(olTop, olBot), min(olLeft, olRight));
+      
+      if (minOL == olTop){         //standing on top
+        alive = false;
+      }
+    }
+  }
   
   void update(){
     //check collision hazard here or maybe in draw in game file
   }
   
   void display() {
+    alive = true;
     if (type.equals("fire")){
       stroke(color(199, 87, 87));
       strokeWeight(2);

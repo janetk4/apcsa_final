@@ -46,6 +46,10 @@ void update(){
     m = "";
   }
   platforms.add(new Platform(0, 680, 1000, 40, m));
+  
+  if (levelNow == 4){
+    //death retry screen
+  }
 }
 
 void keyPressed(){
@@ -94,6 +98,9 @@ void draw(){
     background(243, 216, 237);
   }
   for (Player p : players){
+    if (p.alive == false){
+      levelNow = 4;
+    }
     p.move();    //updates moving
     p.applyG();  //updates gravity
     for (Platform plat : platforms){
