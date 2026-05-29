@@ -16,7 +16,7 @@ void setup(){
   fireboy = players.get(0);
   watergirl = players.get(1);
   
-  levelNow = 2;   //ill do something with this to increase levels later
+  levelNow = 1;   //ill do something with this to increase levels later
 }
 
 void update(){
@@ -36,10 +36,15 @@ void update(){
     m = "bub";
     platforms.add(new Platform(250, 580, 220, 20, m));
     platforms.add(new Platform(550, 580, 220, 20, m));
+    platforms.add(new Platform(900, 550, 100, 150, m));
     platforms.add(new Platform(0, 470, 800, 20, m));
-    platforms.add(new Platform(150, 400, 850, 20, m));
+    platforms.add(new Platform(150, 370, 850, 20, m));
+    platforms.add(new Platform(850, 200, 150, 170, m));
+    platforms.add(new Platform(0, 100, 750, 20, m));
   }
-  
+  if (levelNow == 3){
+    m = "";
+  }
   platforms.add(new Platform(0, 680, 1000, 40, m));
 }
 

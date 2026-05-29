@@ -2,8 +2,8 @@ class Player{
   
   float x;
   float y;
-  float vx = 0;
-  float vy = 30;
+  float vx;
+  float vy;
   float w = 40;    //size of player for now
   float h = 40;
   
