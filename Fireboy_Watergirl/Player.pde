@@ -6,14 +6,13 @@ class Player{
   float vy;
   float w = 40;    //size of player for now
   float h = 40;
-  boolean alive;
   
-  //PVector location;
-  //PVector velocity;
+  boolean alive;
   String type;
   boolean onGround;
   
   Player(String element){
+    alive = true;
     type = element;
     onGround = true;
     x = 10;
@@ -21,6 +20,14 @@ class Player{
     if (type.equals("water")){
       x = 50;
     }
+  }
+  
+  float getX(){
+    return x;
+  }
+  
+  float getY(){
+    return y;
   }
   
   void move(){
@@ -100,7 +107,6 @@ class Player{
   }
   
   void display() {
-    alive = true;
     if (type.equals("fire")){
       stroke(color(199, 87, 87));
       strokeWeight(2);
