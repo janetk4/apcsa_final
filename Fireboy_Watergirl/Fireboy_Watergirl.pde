@@ -4,12 +4,14 @@ ArrayList<Player> players;
 ArrayList<Platform> platforms;
 ArrayList<Hazard> hazards;
 float levelNow;
+float levelPrev;
 int worldW = 1000;
 int worldH = 700;
 String m;
 
 void setup(){
   size(1000, 700);
+  imageMode(CORNER);
   
   platforms = new ArrayList<Platform>();
   hazards = new ArrayList<Hazard>();
@@ -31,6 +33,10 @@ void update(){
 }
 
 void resetLevel(){
+  fireboy.respawn();
+  watergirl.respawn();
+  fireboy.alive = true;
+  watergirl.alive = true;
   platforms.clear();
   hazards.clear();
   platforms.add(new Platform(-5, 0, 5, worldH, "stone"));      //these two makes sides of screen a
@@ -50,11 +56,27 @@ void checkLvCompletion(){
   }
 }
 
+void checkAlive(){
+  for (Player p : players){
+    if (p.alive == false){
+      levelPrev = levelNow;
+      levelNow = 4;
+      resetLevel();
+    }
+  }
+}
+
 void keyPressed(){
   //start
   if (key == ' '){
-    levelNow++;
-    resetLevel();
+    if (levelNow == 0){
+      levelNow++;
+      resetLevel();
+    }
+    if (levelNow == 4){
+      levelNow = levelPrev;
+      resetLevel();
+    }
   }
   //fire
   if (keyCode == UP && fireboy.onGround){
@@ -89,9 +111,14 @@ void keyReleased(){                            //stops movement after releasing 
 
 void draw(){
   update();
+  checkAlive();
   checkLvCompletion();
   if (levelNow == 0){
     drawStart();
+    return;
+  }
+  if (levelNow == 4){
+    drawDeath();
     return;
   }
   else if (levelNow == 1){
@@ -102,14 +129,16 @@ void draw(){
   }
   
   for (Player p : players){
-    if (p.alive == false){
-      levelNow = 4;
-    }
     p.move();    //updates moving
     p.applyG();  //updates gravity
     
     for (Platform plat : platforms){
       p.checkCollision(plat);       //applies collisions
+    }
+    if (p.alive){
+      for (Hazard h : hazards){
+        p.checkHazard(h);
+      }
     }
     
     p.display();
@@ -136,11 +165,24 @@ void drawStart(){
 
 void loadOne(){
   m = "stone";
-  platforms.add(new Platform(0, 680, 1000, 40, m));
-  platforms.add(new Platform(0, 530, 800, 20, m));
-  platforms.add(new Platform(150, 380, 850, 20, m));
-  platforms.add(new Platform(0, 230, 800, 20, m));
-  platforms.add(new Platform(250, 100, 750, 20, m));
+  platforms.add(new Platform(0, 670, 500, 30, m));
+  platforms.add(new Platform(500, 695, 100, 5, m));
+  platforms.add(new Platform(600, 670, 100, 30, m));
+  platforms.add(new Platform(700, 695, 100, 5, m));
+  platforms.add(new Platform(800, 670, 200, 30, m));
+  platforms.add(new Platform(920, 620, 80, 60, m));  //box
+  
+  platforms.add(new Platform(0, 520, 550, 30, m));
+  platforms.add(new Platform(550, 545, 100, 5, m));
+  platforms.add(new Platform(650, 520, 150, 30, m));
+
+  platforms.add(new Platform(150, 370, 850, 30, m));
+  platforms.add(new Platform(0, 230, 800, 30, m));
+  platforms.add(new Platform(250, 100, 750, 30, m));
+  
+  hazards.add(new Hazard(500, 680, 100, 15, "r"));
+  hazards.add(new Hazard(700, 680, 100, 15, "b"));
+  hazards.add(new Hazard(550, 530, 100, 15, "g"));
 }
 
 void loadTwo(){
@@ -153,4 +195,14 @@ void loadTwo(){
   platforms.add(new Platform(150, 370, 850, 20, m));
   platforms.add(new Platform(850, 200, 150, 170, m));
   platforms.add(new Platform(0, 100, 750, 20, m));
+}
+
+void drawDeath(){
+  background(30);
+  fill(255);
+  textAlign(CENTER, CENTER);
+  textSize(50);
+  text("awh man u died", width/2, 180);
+  textSize(30);
+  text("Press SPACE to Retry", width/2, 320);
 }

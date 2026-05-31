@@ -34,7 +34,7 @@ class Platform{
   }
   
   void display(){
-    stroke(color(90));
+    stroke(col);
     strokeWeight(1);
     fill(col);
     rect(location.x, location.y, w, h);

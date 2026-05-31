@@ -4,18 +4,20 @@ class Hazard{
   float w;
   float h;
   color col;
+  String e;
   
   Hazard(float x, float y, float wi, float he, String type){
     location = new PVector(x, y);
     w=wi;
     h=he;
-    if (type.equals("r")){
+    e = type;
+    if (e.equals("r")){
       col = color(184, 10, 45);
     }
-    if (type.equals("b")){
+    if (e.equals("b")){
       col = color(70, 158, 242);
     }
-    if (type.equals("g")){
+    if (e.equals("g")){
       col = color(51, 154, 59);
     }
   }
