@@ -6,6 +6,7 @@ ArrayList<Hazard> hazards;
 ArrayList<Button> buttons;
 ArrayList<Door> doors;
 ArrayList<Block> blocks;
+ArrayList<End> ends;
 float levelNow;
 float levelPrev;
 int worldW = 1000;
@@ -22,6 +23,7 @@ void setup(){
   buttons = new ArrayList<Button>();
   doors = new ArrayList<Door>();
   blocks = new ArrayList<Block>();
+  ends = new ArrayList<End>();
   
   players.add(new Player("fire"));
   players.add(new Player("water"));
@@ -48,6 +50,7 @@ void resetLevel(){
   buttons.clear();
   blocks.clear();
   doors.clear();
+  ends.clear();
   platforms.add(new Platform(-5, 0, 5, worldH, "stone"));      //these two makes sides of screen a
   platforms.add(new Platform(worldW, 0, 5, worldH, "stone"));  //platform so that collision applies
   if (levelNow == 1){
@@ -55,13 +58,6 @@ void resetLevel(){
   }
   else if (levelNow == 2){
     loadTwo();
-  }
-}
-
-void checkLvCompletion(){
-  if (fireboy.getX() > width && watergirl.getX() > width){
-    levelNow++;
-    resetLevel();
   }
 }
 
@@ -199,10 +195,24 @@ void draw(){
     b.display();
   }
   
+  for (End e : ends){
+    e.display();
+  }
+  
   for (Player p : players){
     p.display();
   }
   
+}
+
+void checkLvCompletion(){
+  for (End e : ends){
+    if (checkEnd(e, fireboy, watergirl)){
+      levelNow++;
+      resetLevel();
+      return;
+    }
+  }
 }
 
 void drawStart(){
@@ -246,6 +256,8 @@ void loadOne(){
   doors.add(new Door(800, 340, 200, 30, buttons));
   
   blocks.add(new Block(250, 180, 50, 50));
+  
+  ends.add(new End(800, 40));
 }
 
 void loadTwo(){
