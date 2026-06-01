@@ -114,7 +114,6 @@ void keyReleased(){                            //stops movement after releasing 
 }
 
 void draw(){
-  update();
   checkAlive();
   checkLvCompletion();
   if (levelNow == 0){
