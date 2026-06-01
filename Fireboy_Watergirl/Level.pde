@@ -8,7 +8,7 @@ class Level{
   void loadLevel(int levelNumber){
     if (levelNumber == 1){
       //i think i can set up the map in here
-      platform.add(new Platform(0, 680, 1000, 700, "stone"));
+      platform.add(new Platform(0, 680, 1000, 700));
     }
     if (levelNumber == 2){
       

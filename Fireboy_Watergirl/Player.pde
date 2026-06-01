@@ -257,42 +257,6 @@ class Player{
     }
   }
   
-  boolean checkEnd(End e, Player p1, Player p2){
-    
-    float cx = e.getXcen();         //center of door
-    float cy = e.getYcen();
-    
-    float p1x = p1.x + p1.w / 2;    //centers of chars
-    float p1y = p1.y + p1.h / 2;
-    
-    float p2x = p2.x + p2.w / 2;
-    float p2y = p2.y + p2.h / 2;
-    
-    boolean p1in = abs(p1x - cx) < 50 / 2 && abs(p1y - cy) < 60 / 2;
-    boolean p2in = abs(p2x - cx) < 50 / 2 && abs(p2y - cy) < 60 / 2;
-    
-    return p1in && p2in;
-    
-    //boolean result;
-    //if (type.equals("fire")){
-    //  if (x+17 == e.getXcen() && y == e.getY()){
-    //    result = true;
-    //  }
-    //  else{
-    //    return false;
-    //  }
-    //}
-    //else{
-    //  if (x+17 == e.getXcen()+20 && y == e.getY()){
-    //    return true;
-    //  }
-    //  else{
-    //    return false;
-    //  }
-    //}
-    //return result;
-  }
-  
   void display() {
     //if (type.equals("fire")){
     //  stroke(color(199, 87, 87));

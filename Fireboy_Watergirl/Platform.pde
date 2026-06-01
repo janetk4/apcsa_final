@@ -3,18 +3,12 @@ class Platform{
   PVector location;
   float w;
   float h;
-  color col;
+  color col = color(149);
   
-  Platform(float x, float y, float wi, float he, String mat){
+  Platform(float x, float y, float wi, float he){
     location = new PVector(x, y);
     w = wi;
     h = he;
-    if (mat.equals("stone")){
-      col = color(149);  //fill in with gray
-    }
-    if (mat.equals("bub")){
-      col = color(229, 159, 214);
-    }
   }
   
   float getX(){

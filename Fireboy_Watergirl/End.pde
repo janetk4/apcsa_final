@@ -22,7 +22,7 @@ class End{
     rect(location.x, location.y, 50, 60);
     stroke(colb);
     fill(colb);
-    rect(location.x+70, location.y, 50, 60);
+    rect(location.x+50, location.y, 50, 60);
   }
   
 }

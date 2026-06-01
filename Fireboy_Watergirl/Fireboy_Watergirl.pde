@@ -33,13 +33,6 @@ void setup(){
   levelNow = 0;   //ill do something with this to increase levels later
 }
 
-void update(){
-  //check if level has been beaten
-  
-  //and load levels i guess
-
-}
-
 void resetLevel(){
   fireboy.respawn();
   watergirl.respawn();
@@ -51,13 +44,19 @@ void resetLevel(){
   blocks.clear();
   doors.clear();
   ends.clear();
-  platforms.add(new Platform(-5, 0, 5, worldH, "stone"));      //these two makes sides of screen a
-  platforms.add(new Platform(worldW, 0, 5, worldH, "stone"));  //platform so that collision applies
+  platforms.add(new Platform(-5, 0, 5, worldH));      //these two makes sides of screen a
+  platforms.add(new Platform(worldW, 0, 5, worldH));  //platform so that collision applies
   if (levelNow == 1){
     loadOne();
   }
   else if (levelNow == 2){
     loadTwo();
+  }
+  else if (levelNow == 3){
+    loadThree();
+  }
+  else if (levelNow == 5){
+    drawComplete();
   }
 }
 
@@ -127,10 +126,13 @@ void draw(){
     return;
   }
   else if (levelNow == 1){
-    background(186, 186, 186);
+    background(186);
   }
   else if (levelNow == 2){
-    background(243, 216, 237);
+    background(186);
+  }
+  else if (levelNow == 3){
+    background(186);
   }
   
   
@@ -205,12 +207,37 @@ void draw(){
   
 }
 
+boolean checkEnd(End e, Player p1, Player p2){
+    
+  float cx = e.getXcen();         //center of door
+  float cy = e.getYcen();
+    
+  float p1x = p1.x + p1.w / 2;    //centers of chars
+  float p1y = p1.y + p1.h / 2;
+    
+  float p2x = p2.x + p2.w / 2;
+  float p2y = p2.y + p2.h / 2;
+    
+  boolean p1in = abs(p1x - cx) < 50 / 2 && abs(p1y - cy) < 60 / 2;
+  boolean p2in = abs(p2x - cx) < 50 / 2 && abs(p2y - cy) < 60 / 2;
+    
+  return p1in && p2in;
+}
+
 void checkLvCompletion(){
   for (End e : ends){
     if (checkEnd(e, fireboy, watergirl)){
-      levelNow++;
-      resetLevel();
-      return;
+      if (levelNow==3){
+        levelNow += 2;
+        players.clear();
+        resetLevel();
+        return;
+      }
+      else{
+        levelNow++;
+        resetLevel();
+        return;
+      }
     }
   }
 }
@@ -226,21 +253,20 @@ void drawStart(){
 }
 
 void loadOne(){
-  m = "stone";
-  platforms.add(new Platform(0, 670, 500, 30, m));
-  platforms.add(new Platform(500, 695, 100, 5, m));
-  platforms.add(new Platform(600, 670, 100, 30, m));
-  platforms.add(new Platform(700, 695, 100, 5, m));
-  platforms.add(new Platform(800, 670, 200, 30, m));
-  platforms.add(new Platform(920, 620, 80, 60, m));  //box
+  platforms.add(new Platform(0, 670, 500, 30));
+  platforms.add(new Platform(500, 695, 100, 5));
+  platforms.add(new Platform(600, 670, 100, 30));
+  platforms.add(new Platform(700, 695, 100, 5));
+  platforms.add(new Platform(800, 670, 200, 30));
+  platforms.add(new Platform(920, 620, 80, 60));  //box
   
-  platforms.add(new Platform(0, 520, 550, 30, m));
-  platforms.add(new Platform(550, 545, 100, 5, m));
-  platforms.add(new Platform(650, 520, 150, 30, m));
+  platforms.add(new Platform(0, 520, 550, 30));
+  platforms.add(new Platform(550, 545, 100, 5));
+  platforms.add(new Platform(650, 520, 150, 30));
 
-  platforms.add(new Platform(150, 370, 850, 30, m));
-  platforms.add(new Platform(0, 230, 800, 30, m));
-  platforms.add(new Platform(250, 100, 750, 30, m));
+  platforms.add(new Platform(150, 370, 850, 30));
+  platforms.add(new Platform(0, 230, 800, 30));
+  platforms.add(new Platform(250, 100, 750, 30));
   
   hazards.add(new Hazard(500, 680, 100, 15, "r"));
   hazards.add(new Hazard(700, 680, 100, 15, "b"));
@@ -261,15 +287,74 @@ void loadOne(){
 }
 
 void loadTwo(){
-  m = "bub";
-  platforms.add(new Platform(0, 680, 1000, 40, m));
-  platforms.add(new Platform(250, 580, 220, 20, m));
-  platforms.add(new Platform(550, 580, 220, 20, m));
-  platforms.add(new Platform(900, 550, 100, 150, m));
-  platforms.add(new Platform(0, 470, 800, 20, m));
-  platforms.add(new Platform(150, 370, 850, 20, m));
-  platforms.add(new Platform(850, 200, 150, 170, m));
-  platforms.add(new Platform(0, 100, 750, 20, m));
+  platforms.add(new Platform(0, 695, 1000, 10));
+  platforms.add(new Platform(0, 680, 260, 40));
+  platforms.add(new Platform(460, 680, 110, 40));
+  platforms.add(new Platform(760, 680, 200, 40));
+  
+  platforms.add(new Platform(250, 585, 220, 15));
+  platforms.add(new Platform(250, 570, 10, 15));
+  platforms.add(new Platform(460, 570, 10, 15));
+  
+  platforms.add(new Platform(550, 585, 220, 15));
+  platforms.add(new Platform(550, 570, 10, 15));
+  platforms.add(new Platform(760, 570, 10, 15));
+  
+  platforms.add(new Platform(900, 560, 100, 150));
+  
+  platforms.add(new Platform(0, 470, 800, 20));
+  
+  platforms.add(new Platform(150, 355, 115, 15));
+  platforms.add(new Platform(150, 370, 850, 20));
+  platforms.add(new Platform(850, 200, 150, 170));
+  platforms.add(new Platform(270, 310, 100, 20));
+  platforms.add(new Platform(420, 220, 100, 20));
+  platforms.add(new Platform(630, 260, 100, 20));
+  
+  platforms.add(new Platform(0, 100, 300, 20));
+  platforms.add(new Platform(350, 100, 50, 20));
+  platforms.add(new Platform(450, 100, 50, 20));
+  platforms.add(new Platform(550, 100, 50, 20));
+  platforms.add(new Platform(650, 100, 50, 20));
+  platforms.add(new Platform(750, 100, 50, 20));
+  
+  hazards.add(new Hazard(260, 570, 200, 15, "b"));
+  hazards.add(new Hazard(260, 680, 200, 15, "r"));
+  hazards.add(new Hazard(560, 570, 200, 15, "r"));
+  hazards.add(new Hazard(560, 680, 200, 15, "b"));
+  
+  hazards.add(new Hazard(265, 355, 585, 15, "g"));
+  
+  Button b1 = new Button(580, 455);
+  Button b2 = new Button(160, 340);
+  buttons.add(b1);
+  buttons.add(b2);
+  doors.add(new Door(0, 455, 150, 20, buttons));
+  
+  ends.add(new End(0, 40));
+}
+
+void loadThree(){
+  platforms.add(new Platform(0, 680, 1000, 20));
+  platforms.add(new Platform(150, 570, 850, 15));
+  platforms.add(new Platform(150, 550, 10, 20));
+  platforms.add(new Platform(120, 570, 50, 15));
+  
+  platforms.add(new Platform(850, 200, 150, 20));
+  platforms.add(new Platform(625, 80, 150, 20));
+  
+  hazards.add(new Hazard(160, 550, 870, 20, "g"));
+  
+  Button b1 = new Button(800, 665);
+  Button b2 = new Button(950, 185);
+  buttons.add(b1);
+  buttons.add(b2);
+  
+  doors.add(new Door(200, 550, 150, 20, buttons));
+  doors.add(new Door(450, 450, 150, 20, buttons));
+  doors.add(new Door(700, 350, 150, 20, buttons));
+  
+  ends.add(new End(650, 20));
 }
 
 void drawDeath(){
@@ -280,4 +365,12 @@ void drawDeath(){
   text("You died!", width/2, 180);
   textSize(30);
   text("Press SPACE to Retry", width/2, 320);
+}
+
+void drawComplete(){
+  background(233, 214, 247);
+  fill(255);
+  textAlign(CENTER, CENTER);
+  textSize(80);
+  text("CONGRATS!", width/2, 180);
 }
