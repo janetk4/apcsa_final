@@ -3,6 +3,9 @@ Player watergirl;
 ArrayList<Player> players;
 ArrayList<Platform> platforms;
 ArrayList<Hazard> hazards;
+ArrayList<Button> buttons;
+ArrayList<Door> doors;
+ArrayList<Block> blocks;
 float levelNow;
 float levelPrev;
 int worldW = 1000;
@@ -16,6 +19,9 @@ void setup(){
   platforms = new ArrayList<Platform>();
   hazards = new ArrayList<Hazard>();
   players = new ArrayList<Player>();
+  buttons = new ArrayList<Button>();
+  doors = new ArrayList<Door>();
+  blocks = new ArrayList<Block>();
   
   players.add(new Player("fire"));
   players.add(new Player("water"));
@@ -39,6 +45,9 @@ void resetLevel(){
   watergirl.alive = true;
   platforms.clear();
   hazards.clear();
+  buttons.clear();
+  blocks.clear();
+  doors.clear();
   platforms.add(new Platform(-5, 0, 5, worldH, "stone"));      //these two makes sides of screen a
   platforms.add(new Platform(worldW, 0, 5, worldH, "stone"));  //platform so that collision applies
   if (levelNow == 1){
@@ -128,22 +137,55 @@ void draw(){
     background(243, 216, 237);
   }
   
+  
+  for (Button b : buttons){
+    b.activated = false;
+  }
+  for (Block b : blocks){
+    b.update();
+  }
+  for (Button b : buttons){
+    b.update();
+  }
+  
   for (Player p : players){
     p.move();    //updates moving
     p.applyG();  //updates gravity
     
-    for (Platform plat : platforms){
-      p.checkCollision(plat);       //applies collisions
+    boolean[] resolved = {false};
+    for (Block b : blocks){
+      p.checkBlock(b, resolved);
     }
-    if (p.alive){
+    for (Platform plat : platforms){   //applies collisions
+      p.checkCollision(plat);       
+    }
+    if (p.alive){                      //applies hazards
       for (Hazard h : hazards){
         p.checkHazard(h);
       }
     }
-    
-    p.display();
+    for (Button b : buttons){
+      p.checkButton(b);
+    }
+    for (Door d : doors){
+      p.checkDoor(d);
+    }
+
   }
   
+  
+  for (Door d : doors){
+    d.update();
+  }
+  
+  for (Door d : doors){
+    d.display();
+  }
+  
+  for (Button b : buttons){
+    b.display();
+  }
+   
   for (Platform p : platforms){
     p.display();
   }
@@ -151,6 +193,16 @@ void draw(){
   for (Hazard h : hazards){
     h.display();
   }
+  
+  for (Block b : blocks){
+    b.update();
+    b.display();
+  }
+  
+  for (Player p : players){
+    p.display();
+  }
+  
 }
 
 void drawStart(){
@@ -183,6 +235,17 @@ void loadOne(){
   hazards.add(new Hazard(500, 680, 100, 15, "r"));
   hazards.add(new Hazard(700, 680, 100, 15, "b"));
   hazards.add(new Hazard(550, 530, 100, 15, "g"));
+  
+  Button b1 = new Button(300, 505);
+  Button b2 = new Button(300, 355);
+  Button b3 = new Button(550, 215);
+  buttons.add(b1);
+  buttons.add(b2);
+  buttons.add(b3);
+  doors.add(new Door(0, 490, 150, 30, buttons));
+  doors.add(new Door(800, 340, 200, 30, buttons));
+  
+  blocks.add(new Block(250, 180, 50, 50));
 }
 
 void loadTwo(){
@@ -202,7 +265,7 @@ void drawDeath(){
   fill(255);
   textAlign(CENTER, CENTER);
   textSize(50);
-  text("awh man u died", width/2, 180);
+  text("You died!", width/2, 180);
   textSize(30);
   text("Press SPACE to Retry", width/2, 320);
 }

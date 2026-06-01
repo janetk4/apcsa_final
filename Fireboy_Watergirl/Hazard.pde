@@ -39,6 +39,7 @@ class Hazard{
   }
   
   void display(){
+    stroke(col);
     fill(col);
     rect(location.x, location.y, w, h);
   }

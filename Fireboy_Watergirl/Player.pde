@@ -53,6 +53,7 @@ class Player{
   }
   
   void move(){
+    onGround = false;
     x += vx;
   }
   
@@ -124,6 +125,135 @@ class Player{
     }
     if (type.equals("water") && hzd.e.equals("r")){
       alive = false;
+    }
+  }
+  
+  void checkButton(Button b) {
+    
+    float bx = b.getX();
+    float by = b.getY();
+    float bw = 50;
+    float bh = 15;
+    
+    if (x< bx+bw && x+w > bx && y < by+bh && y+h > by){
+      
+      //overlaps
+      float top = y+h - by;
+      float bot = by+bh - y;
+      float left = x+w - bx;
+      float right = bx+bw - x;
+      
+      //smallest overlap
+      float min = min(min(top, bot), min(left, right));
+      
+      if (top <= bot && top <= left && top <= right){         //hit top
+        y = by - h;
+        vy = 0;
+        b.activated = true;
+      }
+      else if (min == bot){    //hit bottom
+        y = by + bh;
+        vy = 0;
+      }
+      else if (min == left){   //hit sides
+        x = bx - w;
+        vx = 0;
+      }
+      else if (min == right){
+        x = bx + bw;
+        vx = 0;
+      }
+      
+    }
+    
+  }
+  
+  void checkDoor(Door d){
+    float px = d.getX();
+    float py = d.getY();
+    float pw = d.getW();
+    float ph = d.getH();
+    
+    if (x< px+pw && x+w > px && y < py+ph && y+h > py){
+      //find overlaps btw platform and players
+      float olTop = y+h - py;
+      float olBot = py+ph - y;
+      float olLeft = x+w - px;
+      float olRight = px+pw - x;
+      
+      //smallest overlap
+      float minOL = min(min(olTop, olBot), min(olLeft, olRight));
+      
+      if (minOL == olTop){         //standing on top
+        y = py - h;
+        vy = 0;
+        onGround = true;
+        
+        if (d.isOpen()){   //brings char up
+          y += 1;
+        }
+        
+      }
+      else if (minOL == olBot){    //hits bottom
+        y = py + ph;
+        vy = 0;
+      }
+      else if (minOL == olLeft){   //hits the sides
+        x = px - w;
+        vx = 0;
+      }
+      else if (minOL == olRight){
+        x = px + pw;
+        vx = 0;
+      }
+    }
+  }
+  
+  void checkBlock(Block b, boolean[] resolved){
+    
+    if (resolved[0]){
+      return;
+    }
+    if (x < b.pos.x + b.w && x + w > b.pos.x && y + h > b.pos.y && y < b.pos.y + b.h){
+      float top = y + h - b.pos.y;
+      float bot = b.pos.y + b.h - y;
+      float left = x + w - b.pos.x;
+      float right = b.pos.x + b.w - x;
+      
+      float min = min(min(top, bot), min(left, right));
+      
+      if (top < left && top < right && vy >= 0){         //standing
+        y = b.pos.y - h;
+        vy = 0;
+        
+        onGround = true;
+        resolved[0] = true;
+        return;
+      }
+      else if(bot < left && bot < right && vy < 0){
+        y = b.pos.y + b.h;
+        vy = 0;
+        
+        resolved[0] = true;
+        return;
+      }
+      else if(left < top && left < bot && vx > 0){    //push left
+        x = b.pos.x - w;
+        vx = 0;
+        
+        b.vx = b.pushStrength;
+        resolved[0] = true;
+        return;
+      }
+      else if(right < top && right < bot && vx < 0){
+        x = b.pos.x + b.w;
+        vx = 0;
+        
+        b.vx = -b.pushStrength;
+        resolved[0] = true;
+        return;
+      }
+      
     }
   }
   
