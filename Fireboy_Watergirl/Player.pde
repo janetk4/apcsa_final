@@ -220,8 +220,6 @@ class Player{
       float left = x + w - b.pos.x;
       float right = b.pos.x + b.w - x;
       
-      float min = min(min(top, bot), min(left, right));
-      
       if (top < left && top < right && vy >= 0){         //standing
         y = b.pos.y - h;
         vy = 0;
@@ -258,24 +256,11 @@ class Player{
   }
   
   void display() {
-    //if (type.equals("fire")){
-    //  stroke(color(199, 87, 87));
-    //  strokeWeight(2);
-    //  fill(242, 111, 111);
-    //  square(x, y, w);
-    //}
-    //if (type.equals("water")){
-    //  stroke(color(82, 152, 205));
-    //  fill(136, 196, 241);
-    //  square(x, y, w);
-    //}
     if (!alive){
       return;
     }
     image(img, x, y, w, h);
     noFill();
-    //stroke(255, 0, 0);
-    //rect(x, y, w, h);
   }
   
 }

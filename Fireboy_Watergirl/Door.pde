@@ -31,13 +31,7 @@ class Door{
     else{
       location.y = min(location.y + 2, closedY);
     }
-    
-    //if (trigger.activated){
-    //  location.y = max(location.y-1, openY);
-    //}
-    //else{
-    //  location.y = min(location.y+1, closedY);
-    //}
+
   }
   
   float getX(){

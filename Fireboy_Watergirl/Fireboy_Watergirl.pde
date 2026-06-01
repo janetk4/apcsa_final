@@ -30,7 +30,7 @@ void setup(){
   fireboy = players.get(0);
   watergirl = players.get(1);
   
-  levelNow = 0;   //ill do something with this to increase levels later
+  levelNow = 0;
 }
 
 void resetLevel(){

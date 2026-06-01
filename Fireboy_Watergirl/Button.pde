@@ -29,26 +29,10 @@ class Button{
     }
   }
   
-  //void down(){
-  //  location.y += 2;
-  //  activated = true;
-  //}
-  
-  //void up(){
-  //  if (location.y != originalY){
-  //    location.y += 2;
-  //  }
-  //  location.y = originalY;
-  //  activated = false;
-  //}
-  
   void display(){
     stroke(color(255, 227, 146));
-    //strokeWeight(2);
     fill(color(255, 227, 146));
     rect(location.x, location.y, 50, 15);
-    //triangle(location.x-10, location.y+15, location.x, location.y+15, location.x, location.y);
-    //triangle(location.x+40, location.y, location.x+40, location.y+15, location.x+50, location.y+15);
   }
   
 }
